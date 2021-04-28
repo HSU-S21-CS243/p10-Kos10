@@ -32,13 +32,14 @@ void XmlCompilationEngine::compileClass()
 
 	output << "</class>" << endl;
 }
-void XmlCompilationEngine::compileClassVarDec()
+void XmlCompilationEngine::compileClassVarDec() //todo FIX
 {
+	//this is broken and BAD...I think????
 	output << "<classVarDec>" << endl;
 
 	while (_tokens[_tokenCounter]->symbol != Symbol::SemiColon)
 	{
-		if (_tokens[_tokenCounter]->symbol == Symbol::LeftParentheses)
+		if (_tokens[_tokenCounter]->symbol == Symbol::LeftParentheses) //I don't think this is needed??
 		{
 			compileParameterList();
 		}
@@ -65,6 +66,8 @@ void XmlCompilationEngine::compileSubroutine()
 		_tokenCounter++; //this has to be done after every read of the tokens
 	}
 	
+	output << _tokens[_tokenCounter]->toString() << endl;
+	_tokenCounter++; //this has to be done after every read of the tokens
 
 	//parameter list
 	compileParameterList();
@@ -72,16 +75,19 @@ void XmlCompilationEngine::compileSubroutine()
 	output << _tokens[_tokenCounter]->toString() << endl; //for the {
 	_tokenCounter++; //this has to be done after every read of the tokens
 	
-	while (_tokens[_tokenCounter]->keyword == Keyword::Var
-		|| _tokens[_tokenCounter]->keyword == Keyword::Let
-		)
+	//Var Decs
+	while (_tokens[_tokenCounter]->keyword == Keyword::Var)
 	{
-		if (_tokens[_tokenCounter]->keyword == Keyword::Var) //not super efficient, but readable
-		{
-			compileVarDec();
-		}
+		compileVarDec();
 	}
-
+	
+	//statments 
+	output << "<statements>" << endl;
+	while(_tokens[_tokenCounter]->isStatement())
+	{
+		compileStatement();
+	}
+	output << "</statements>" << endl;
 
 	output << "</subroutineDec>" << endl;
 }
@@ -100,6 +106,7 @@ void XmlCompilationEngine::compileParameterList()
 
 	while (_tokens[_tokenCounter]->symbol != Symbol::RightParentheses)
 	{
+		//parameter lists aren't made of expressions
 		output << _tokens[_tokenCounter]->toString() << endl;
 		_tokenCounter++; //this has to be done after every read of the tokens
 	}
@@ -113,17 +120,20 @@ void XmlCompilationEngine::compileVarDec()
 {
 	output << "<varDec>" << endl;
 
-	output << _tokens[_tokenCounter]->toString() << endl; //Var
-	_tokenCounter++; //this has to be done after every read of the tokens
-
-	output << _tokens[_tokenCounter]->toString() << endl; //Type
-	_tokenCounter++; //this has to be done after every read of the tokens
-
-	output << _tokens[_tokenCounter]->toString() << endl; //Name
-	_tokenCounter++; //this has to be done after every read of the tokens
-
-	output << _tokens[_tokenCounter]->toString() << endl; //Semi Colon
-	_tokenCounter++; //this has to be done after every read of the tokens
+	while (_tokens[_tokenCounter]->symbol != Symbol::SemiColon)
+	{
+		if (_tokens[_tokenCounter]->symbol == Symbol::LeftParentheses) //I don't think this is needed??
+		{
+			compileParameterList();
+		}
+		else
+		{
+			output << _tokens[_tokenCounter]->toString() << endl;
+			_tokenCounter++; //this has to be done after every write from the tokens
+		}
+	}
+	output << _tokens[_tokenCounter]->toString() << endl; //for the ';'
+	_tokenCounter++; //this has to be done after every write from the tokens
 
 	output << "</varDec>" << endl;
 }
