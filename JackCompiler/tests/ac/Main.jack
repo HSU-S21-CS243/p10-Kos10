@@ -1,0 +1,34 @@
+//very basic class that contains all possible commands.
+class Main {
+
+    static int some_number;
+    field char some_char;
+    static boolean some_bool;
+    field Array some_array;
+
+    constructor Main new(int sn, char sc, boolean sb, Array sa) {
+        let some_number = sn;
+        let some_char = sc;
+        let some_bool = sb;
+        let some_array = Array.new(10);
+    }
+
+    function void foo() {
+        do baz(0, 10);
+        return;
+    }
+
+    method int baz(int x, int y) {
+        var int a, b, c;
+        while(x < y) {
+            if(x > 0 | x < 0) {
+                some_array[0] = x * y;
+                do baz(x + 1, y);
+            }
+            else {
+                some_array[1] = some_array[0] * some_array[0] + 5; 
+            }
+        }
+        
+    }
+}

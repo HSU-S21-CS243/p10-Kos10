@@ -282,7 +282,14 @@ void XmlCompilationEngine::compileIf()
 	output << _tokens[_tokenCounter]->toString() << endl; //for the 'if'
 	_tokenCounter++; //this has to be done after every write from the tokens
 
-	compileExpressionList();
+	output << _tokens[_tokenCounter]->toString() << endl; //for the '('
+	_tokenCounter++; //this has to be done after every write from the tokens
+
+	compileExpression();
+
+	output << _tokens[_tokenCounter]->toString() << endl; //for the ')'
+	_tokenCounter++; //this has to be done after every write from the tokens
+
 	output << _tokens[_tokenCounter]->toString() << endl; //for the '{'
 	_tokenCounter++; //this has to be done after every write from the tokens
 
