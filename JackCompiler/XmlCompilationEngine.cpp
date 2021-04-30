@@ -94,7 +94,22 @@ void XmlCompilationEngine::compileSubroutine()
 
 void XmlCompilationEngine::compileSubroutineCall()
 {
-
+	//I don't think this will work. I'm at a loss. I've missed some critical piece of information and I don't
+	//know how to ask for help in a way that will actually aid me.
+	while (_tokens[_tokenCounter]->symbol != Symbol::SemiColon) //go until the end of the statment
+	{
+		if (_tokens[_tokenCounter]->symbol != Symbol::LeftParentheses)
+		{
+			compileExpressionList();
+		}
+		else
+		{
+			output << _tokens[_tokenCounter]->toString() << endl;
+			_tokenCounter++; //this has to be done after every write from the tokens
+		}
+	}
+	//output << _tokens[_tokenCounter]->toString() << endl; //for the ';'
+	//_tokenCounter++; //this has to be done after every write from the tokens
 }
 
 void XmlCompilationEngine::compileParameterList()
@@ -164,19 +179,25 @@ void XmlCompilationEngine::compileStatement()
 void XmlCompilationEngine::compileDo()
 {
 	output << "<doStatement>" << endl;
-	while (_tokens[_tokenCounter]->symbol != Symbol::SemiColon) //go until the end of the statment
-	{
-		if (_tokens[_tokenCounter]->symbol != Symbol::LeftParentheses)
-		{
-			compileParameterList();
-		}
-		else
-		{
-			output << _tokens[_tokenCounter]->toString() << endl;
-			_tokenCounter++; //this has to be done after every write from the tokens
-		}
-	}
-	output << _tokens[_tokenCounter]->toString() << endl; //for the ';'
+	//while (_tokens[_tokenCounter]->symbol != Symbol::SemiColon) //go until the end of the statment
+	//{
+	//	if (_tokens[_tokenCounter]->symbol != Symbol::LeftParentheses)
+	//	{
+	//		compileParameterList();
+	//	}
+	//	else
+	//	{
+	//		output << _tokens[_tokenCounter]->toString() << endl;
+	//		_tokenCounter++; //this has to be done after every write from the tokens
+	//	}
+	//}
+	//output << _tokens[_tokenCounter]->toString() << endl; //for the ';'
+	//_tokenCounter++; //this has to be done after every write from the tokens
+
+
+	compileSubroutineCall();
+
+	output << _tokens[_tokenCounter]->toString() << endl; //for the ;
 	_tokenCounter++; //this has to be done after every write from the tokens
 	output << "</doStatement>" << endl;
 }
@@ -209,15 +230,11 @@ void XmlCompilationEngine::compileWhile()
 	output << _tokens[_tokenCounter]->toString() << endl; //for the '{'
 	_tokenCounter++; //this has to be done after every write from the tokens
 
-	while (_tokens[_tokenCounter]->keyword == Keyword::Let ||
-		_tokens[_tokenCounter]->keyword == Keyword::Do ||
-		_tokens[_tokenCounter]->keyword == Keyword::Return ||
-		_tokens[_tokenCounter]->keyword == Keyword::If ||
-		_tokens[_tokenCounter]->keyword == Keyword::While
-		)
+	while (_tokens[_tokenCounter]->isStatement())
 	{
 		compileStatement();
 	}
+
 	output << _tokens[_tokenCounter]->toString() << endl; //for the '}'
 	_tokenCounter++; //this has to be done after every write from the tokens
 
@@ -226,11 +243,14 @@ void XmlCompilationEngine::compileWhile()
 void XmlCompilationEngine::compileReturn()
 {
 	output << "<returnStatement>" << endl;
-	while (_tokens[_tokenCounter]->symbol != Symbol::SemiColon)
+	output << _tokens[_tokenCounter]->toString() << endl; //for the keyword 'return'
+	_tokenCounter++; //this has to be done after every write from the tokens
+
+	if (_tokens[_tokenCounter]->symbol != Symbol::SemiColon)
 	{
-		output << _tokens[_tokenCounter]->toString() << endl;
-		_tokenCounter++; //this has to be done after every write from the tokens
+		compileExpression();
 	}
+
 	output << _tokens[_tokenCounter]->toString() << endl; //for the ';'
 	_tokenCounter++; //this has to be done after every write from the tokens
 	output << "</returnStatement>" << endl;
@@ -246,16 +266,24 @@ void XmlCompilationEngine::compileIf()
 	output << _tokens[_tokenCounter]->toString() << endl; //for the '{'
 	_tokenCounter++; //this has to be done after every write from the tokens
 
-	while (_tokens[_tokenCounter]->keyword == Keyword::Let ||
-		_tokens[_tokenCounter]->keyword == Keyword::Do ||
-		_tokens[_tokenCounter]->keyword == Keyword::Return ||
-		_tokens[_tokenCounter]->keyword == Keyword::If ||
-		_tokens[_tokenCounter]->keyword == Keyword::While
-		)
+	while (_tokens[_tokenCounter]->isStatement())
 	{
 		compileStatement();
 	}
 	output << _tokens[_tokenCounter]->toString() << endl; //for the '}'
+	if (_tokens[_tokenCounter]->keyword == Keyword::Else)
+	{
+		output << _tokens[_tokenCounter]->toString() << endl; //for the 'if'
+		_tokenCounter++; //this has to be done after every write from the tokens
+
+		output << _tokens[_tokenCounter]->toString() << endl; //for the '{'
+		_tokenCounter++; //this has to be done after every write from the tokens
+
+		compileStatement(); //for the else
+
+		output << _tokens[_tokenCounter]->toString() << endl; //for the '}'
+		_tokenCounter++; //this has to be done after every write from the tokens
+	}
 	_tokenCounter++; //this has to be done after every write from the tokens
 
 	output << "</ifStatement>" << endl;
@@ -266,21 +294,22 @@ void XmlCompilationEngine::compileExpression()
 	while (_tokens[_tokenCounter]->symbol != Symbol::SemiColon &&
 		_tokens[_tokenCounter]->symbol != Symbol::RightParentheses &&
 		_tokens[_tokenCounter]->symbol != Symbol::RightHardBracket &&
-		_tokens[_tokenCounter]->symbol != Symbol::RightCurlyBrace
+		_tokens[_tokenCounter]->symbol != Symbol::RightCurlyBrace && 
+		_tokens[_tokenCounter]->symbol != Symbol::Comma
 		)
 	{
 		if (_tokens[_tokenCounter]->symbol == Symbol::Equal ||
+			_tokens[_tokenCounter]->symbol == Symbol::Pipe ||
 			_tokens[_tokenCounter]->symbol == Symbol::Plus ||
 			_tokens[_tokenCounter]->symbol == Symbol::Minus ||
 			_tokens[_tokenCounter]->symbol == Symbol::Asterisk ||
 			_tokens[_tokenCounter]->symbol == Symbol::ForwardSlash ||
 			_tokens[_tokenCounter]->symbol == Symbol::Ampersand ||
 			_tokens[_tokenCounter]->symbol == Symbol::LessThan ||
-			_tokens[_tokenCounter]->symbol == Symbol::GreaterThan ||
-			_tokens[_tokenCounter]->symbol == Symbol::Tilde
+			_tokens[_tokenCounter]->symbol == Symbol::GreaterThan
 			)
 		{
-			output << _tokens[_tokenCounter]->toString() << endl; //output that symbol
+			output << _tokens[_tokenCounter]->toString() << endl; //output that operator
 			_tokenCounter++; //this has to be done after every write from the tokens
 		}
 		else
@@ -298,18 +327,64 @@ integerConstant | stringConstant | keywordConstant | unaryOp term | varName | va
 void XmlCompilationEngine::compileTerm()
 {
 	output << "<term>" << endl;
-	output << _tokens[_tokenCounter]->toString() << endl;
-	_tokenCounter++; //this has to be done after every write from the tokens
-	if (_tokens[_tokenCounter]->symbol == Symbol::LeftHardBracket)
+	//all of this is wrong
+	//output << _tokens[_tokenCounter]->toString() << endl;
+	//_tokenCounter++; //this has to be done after every write from the tokens
+	//if (_tokens[_tokenCounter]->symbol == Symbol::LeftHardBracket)
+	//{
+	//	output << _tokens[_tokenCounter]->toString() << endl; //for the '['
+	//	_tokenCounter++; //this has to be done after every write from the tokens
+
+	//	compileExpression();
+
+	//	output << _tokens[_tokenCounter]->toString() << endl; //for the ']'
+	//	_tokenCounter++; //this has to be done after every write from the tokens
+	//}
+	//all of this is wrong
+	if (_tokens[_tokenCounter]->symbol == Symbol::LeftParentheses)
 	{
-		output << _tokens[_tokenCounter]->toString() << endl; //for the '['
+		output << _tokens[_tokenCounter]->toString() << endl; // for the (
 		_tokenCounter++; //this has to be done after every write from the tokens
 
 		compileExpression();
 
-		output << _tokens[_tokenCounter]->toString() << endl; //for the ']'
+		output << _tokens[_tokenCounter]->toString() << endl; // for the )
+		_tokenCounter++; //this has to be done after every write from the tokens
+
+	}
+	else if (_tokens[_tokenCounter]->symbol == Symbol::Minus || //this is a Unary Op
+		_tokens[_tokenCounter]->symbol == Symbol::Tilde
+		)
+	{
+		output << _tokens[_tokenCounter]->toString() << endl; //for the Unary Op
+		_tokenCounter++; //this has to be done after every write from the tokens
+
+		compileTerm();
+
+	} else if (_tokens[_tokenCounter + 1]->symbol == Symbol::Period || _tokens[_tokenCounter + 1]->symbol == Symbol::LeftParentheses)
+	{
+
+		compileSubroutineCall();
+
+	}
+	else if (_tokens[_tokenCounter + 1]->symbol == Symbol::LeftHardBracket)
+	{
+
+		output << _tokens[_tokenCounter]->toString() << endl; //for the [
+		_tokenCounter++; //this has to be done after every write from the tokens
+
+		compileExpression();
+
+		output << _tokens[_tokenCounter]->toString() << endl; //for the ]
 		_tokenCounter++; //this has to be done after every write from the tokens
 	}
+	else
+	{
+		output << _tokens[_tokenCounter]->toString() << endl; //just spit it out
+		_tokenCounter++; //this has to be done after every write from the tokens
+	}
+	
+
 	output << "</term>" << endl;
 }
 
@@ -321,6 +396,11 @@ void XmlCompilationEngine::compileExpressionList()
 	while (_tokens[_tokenCounter]->symbol != Symbol::RightParentheses)
 	{
 		compileExpression();
+		if (_tokens[_tokenCounter]->symbol == Symbol::Comma)
+		{
+			output << _tokens[_tokenCounter]->toString() << endl; //for the ','
+			_tokenCounter++; //this has to be done after every read of the tokens
+		}
 	}
 
 	output << "</expressionList>" << endl;
