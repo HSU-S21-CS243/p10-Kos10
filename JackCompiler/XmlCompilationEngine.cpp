@@ -29,6 +29,8 @@ void XmlCompilationEngine::compileClass()
 		compileSubroutine();
 	}
 
+	output << _tokens[_tokenCounter]->toString() << endl; //for the }
+	_tokenCounter++; //this has to be done after every Write from the tokens
 
 	output << "</class>" << endl;
 }
@@ -39,15 +41,8 @@ void XmlCompilationEngine::compileClassVarDec() //todo FIX
 
 	while (_tokens[_tokenCounter]->symbol != Symbol::SemiColon)
 	{
-		if (_tokens[_tokenCounter]->symbol == Symbol::LeftParentheses) //I don't think this is needed??
-		{
-			compileParameterList();
-		}
-		else
-		{
-			output << _tokens[_tokenCounter]->toString() << endl;
-			_tokenCounter++; //this has to be done after every write from the tokens
-		}
+		output << _tokens[_tokenCounter]->toString() << endl;
+		_tokenCounter++; //this has to be done after every write from the tokens
 	}
 	output << _tokens[_tokenCounter]->toString() << endl; //for the ';'
 	_tokenCounter++; //this has to be done after every write from the tokens
@@ -70,6 +65,8 @@ void XmlCompilationEngine::compileSubroutine()
 	//parameter list
 	compileParameterList();
 
+	output << "<subroutineBody>" << endl;
+
 	output << _tokens[_tokenCounter]->toString() << endl; //for the {
 	_tokenCounter++; //this has to be done after every read of the tokens
 	
@@ -88,6 +85,7 @@ void XmlCompilationEngine::compileSubroutine()
 	output << "</statements>" << endl;
 	output << _tokens[_tokenCounter]->toString() << endl; //for the }
 	_tokenCounter++; //this has to be done after every read of the tokens
+	output << "</subroutineBody>" << endl;
 	output << "</subroutineDec>" << endl;
 }
 
@@ -129,10 +127,10 @@ void XmlCompilationEngine::compileParameterList()
 		_tokenCounter++; //this has to be done after every read of the tokens
 	}
 
+	output << "</parameterList>" << endl;
+
 	output << _tokens[_tokenCounter]->toString() << endl; //for the )
 	_tokenCounter++; //this has to be done after every read of the tokens
-
-	output << "</parameterList>" << endl;
 }
 void XmlCompilationEngine::compileVarDec()
 {
@@ -175,6 +173,10 @@ void XmlCompilationEngine::compileStatement()
 void XmlCompilationEngine::compileDo()
 {
 	output << "<doStatement>" << endl;
+
+	output << _tokens[_tokenCounter]->toString() << endl; //for the do
+	_tokenCounter++; //this has to be done after every write from the tokens
+
 	//while (_tokens[_tokenCounter]->symbol != Symbol::SemiColon) //go until the end of the statment
 	//{
 	//	if (_tokens[_tokenCounter]->symbol != Symbol::LeftParentheses)
@@ -233,15 +235,25 @@ void XmlCompilationEngine::compileWhile()
 	output << _tokens[_tokenCounter]->toString() << endl; //for the 'while'
 	_tokenCounter++; //this has to be done after every write from the tokens
 	
-	compileExpressionList();
+	output << _tokens[_tokenCounter]->toString() << endl; //for the '('
+	_tokenCounter++; //this has to be done after every write from the tokens
+
+	compileExpression();
+
+	output << _tokens[_tokenCounter]->toString() << endl; //for the ')'
+	_tokenCounter++; //this has to be done after every write from the tokens
 
 	output << _tokens[_tokenCounter]->toString() << endl; //for the '{'
 	_tokenCounter++; //this has to be done after every write from the tokens
+
+	output << "<statements>" << endl;
 
 	while (_tokens[_tokenCounter]->isStatement())
 	{
 		compileStatement();
 	}
+
+	output << "</statements>" << endl;
 
 	output << _tokens[_tokenCounter]->toString() << endl; //for the '}'
 	_tokenCounter++; //this has to be done after every write from the tokens
@@ -274,10 +286,15 @@ void XmlCompilationEngine::compileIf()
 	output << _tokens[_tokenCounter]->toString() << endl; //for the '{'
 	_tokenCounter++; //this has to be done after every write from the tokens
 
+	output << "<statements>" << endl;
+
 	while (_tokens[_tokenCounter]->isStatement())
 	{
 		compileStatement();
 	}
+
+	output << "</statements>" << endl;
+
 	output << _tokens[_tokenCounter]->toString() << endl; //for the '}'
 	if (_tokens[_tokenCounter]->keyword == Keyword::Else)
 	{
@@ -287,7 +304,11 @@ void XmlCompilationEngine::compileIf()
 		output << _tokens[_tokenCounter]->toString() << endl; //for the '{'
 		_tokenCounter++; //this has to be done after every write from the tokens
 
+		output << "<statements>" << endl;
+
 		compileStatement(); //for the else
+
+		output << "</statements>" << endl;
 
 		output << _tokens[_tokenCounter]->toString() << endl; //for the '}'
 		_tokenCounter++; //this has to be done after every write from the tokens
@@ -389,7 +410,7 @@ void XmlCompilationEngine::compileExpressionList()
 			output << _tokens[_tokenCounter]->toString() << endl; //for the ','
 			_tokenCounter++; //this has to be done after every read of the tokens
 		}
-	}
+	} 
 
 	output << "</expressionList>" << endl;
 	output << _tokens[_tokenCounter]->toString() << endl; //for the )
