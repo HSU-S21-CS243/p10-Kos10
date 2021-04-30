@@ -1,224 +1,222 @@
 <class>
-<keyword> class </keyword>
-<identifier> Main </identifier>
-<symbol> { </symbol>
-<classVarDec>
-<keyword> static </keyword>
-<keyword> int </keyword>
-<identifier> some_number </identifier>
-<symbol> ; </symbol>
-</classVarDec>
-<classVarDec>
-<keyword> field </keyword>
-<keyword> char </keyword>
-<identifier> some_char </identifier>
-<symbol> ; </symbol>
-</classVarDec>
-<classVarDec>
-<keyword> static </keyword>
-<keyword> boolean </keyword>
-<identifier> some_bool </identifier>
-<symbol> ; </symbol>
-</classVarDec>
-<classVarDec>
-<keyword> field </keyword>
-<identifier> Array </identifier>
-<identifier> some_array </identifier>
-<symbol> ; </symbol>
-</classVarDec>
-<subroutineDec>
-<keyword> constructor </keyword>
-<identifier> Main </identifier>
-<identifier> new </identifier>
-<symbol> ( </symbol>
-<parameterList>
-<keyword> int </keyword>
-<identifier> sn </identifier>
-<symbol> , </symbol>
-<keyword> char </keyword>
-<identifier> sc </identifier>
-<symbol> , </symbol>
-<keyword> boolean </keyword>
-<identifier> sb </identifier>
-<symbol> , </symbol>
-<identifier> Array </identifier>
-<identifier> sa </identifier>
-</parameterList>
-<symbol> ) </symbol>
-<subroutineBody>
-<symbol> { </symbol>
-<statements>
-<letStatement>
-<keyword> let </keyword>
-<identifier> some_number </identifier>
-<symbol> = </symbol>
-<expression>
-<term>
-<identifier> sn </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
-</letStatement>
-<letStatement>
-<keyword> let </keyword>
-<identifier> some_char </identifier>
-<symbol> = </symbol>
-<expression>
-<term>
-<identifier> sc </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
-</letStatement>
-<letStatement>
-<keyword> let </keyword>
-<identifier> some_bool </identifier>
-<symbol> = </symbol>
-<expression>
-<term>
-<identifier> sb </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
-</letStatement>
-<letStatement>
-<keyword> let </keyword>
-<identifier> some_array </identifier>
-<symbol> = </symbol>
-<expression>
-<term>
-<identifier> Array </identifier>
-<symbol> . </symbol>
-<identifier> new </identifier>
-<symbol> ( </symbol>
-<expressionList>
-<expression>
-<term>
-<integerConstant> 10 </integerConstant>
-</term>
-</expression>
-</expressionList>
-<symbol> ) </symbol>
-</term>
-</expression>
-<symbol> ; </symbol>
-</letStatement>
-</statements>
-<symbol> } </symbol>
-</subroutineBody>
-</subroutineDec>
-<subroutineDec>
-<keyword> function </keyword>
-<keyword> void </keyword>
-<identifier> foo </identifier>
-<symbol> ( </symbol>
-<parameterList>
-</parameterList>
-<symbol> ) </symbol>
-<subroutineBody>
-<symbol> { </symbol>
-<statements>
-<doStatement>
-<keyword> do </keyword>
-<identifier> baz </identifier>
-<symbol> ( </symbol>
-<expressionList>
-<expression>
-<term>
-<integerConstant> 0 </integerConstant>
-</term>
-</expression>
-<symbol> , </symbol>
-<expression>
-<term>
-<integerConstant> 10 </integerConstant>
-</term>
-</expression>
-</expressionList>
-<symbol> ) </symbol>
-<symbol> ; </symbol>
-</doStatement>
-<returnStatement>
-<keyword> return </keyword>
-<symbol> ; </symbol>
-</returnStatement>
-</statements>
-<symbol> } </symbol>
-</subroutineBody>
-</subroutineDec>
-<subroutineDec>
-<keyword> method </keyword>
-<keyword> int </keyword>
-<identifier> baz </identifier>
-<symbol> ( </symbol>
-<parameterList>
-<keyword> int </keyword>
-<identifier> x </identifier>
-<symbol> , </symbol>
-<keyword> int </keyword>
-<identifier> y </identifier>
-</parameterList>
-<symbol> ) </symbol>
-<subroutineBody>
-<symbol> { </symbol>
-<varDec>
-<keyword> var </keyword>
-<keyword> int </keyword>
-<identifier> a </identifier>
-<symbol> , </symbol>
-<identifier> b </identifier>
-<symbol> , </symbol>
-<identifier> c </identifier>
-<symbol> ; </symbol>
-</varDec>
-<statements>
-<whileStatement>
-<keyword> while </keyword>
-<symbol> ( </symbol>
-<expression>
-<term>
-<identifier> x </identifier>
-</term>
-<symbol> &lt; </symbol>
-<term>
-<identifier> y </identifier>
-</term>
-</expression>
-<symbol> ) </symbol>
-<symbol> { </symbol>
-<statements>
-<ifStatement>
-<keyword> if </keyword>
-<symbol> ( </symbol>
-<expression>
-<term>
-<identifier> x </identifier>
-</term>
-<symbol> &gt; </symbol>
-<term>
-<integerConstant> 0 </integerConstant>
-</term>
-<symbol> | </symbol>
-<term>
-<identifier> x </identifier>
-</term>
-<symbol> &lt; </symbol>
-<term>
-<integerConstant> 0 </integerConstant>
-</term>
-</expression>
-<symbol> ) </symbol>
-<symbol> { </symbol>
-<statements>
-</statements>
-<identifier> some_array </identifier>
-</ifStatement>
-</statements>
-<symbol> [ </symbol>
-</whileStatement>
-</statements>
-<integerConstant> 0 </integerConstant>
-</subroutineBody>
-</subroutineDec>
-<symbol> ] </symbol>
+    <keyword> class </keyword>
+    <identifier> Main </identifier>
+    <symbol> { </symbol>
+    <classVarDec>
+        <keyword> static </keyword>
+        <keyword> int </keyword>
+        <identifier> some_number </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
+    <classVarDec>
+        <keyword> field </keyword>
+        <keyword> char </keyword>
+        <identifier> some_char </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
+    <classVarDec>
+        <keyword> static </keyword>
+        <keyword> boolean </keyword>
+        <identifier> some_bool </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
+    <classVarDec>
+        <keyword> field </keyword>
+        <identifier> Array </identifier>
+        <identifier> some_array </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
+    <subroutineDec>
+        <keyword> constructor </keyword>
+        <identifier> Main </identifier>
+        <identifier> new </identifier>
+        <symbol> ( </symbol>
+        <parameterList>
+            <keyword> int </keyword>
+            <identifier> sn </identifier>
+            <symbol> , </symbol>
+            <keyword> char </keyword>
+            <identifier> sc </identifier>
+            <symbol> , </symbol>
+            <keyword> boolean </keyword>
+            <identifier> sb </identifier>
+            <symbol> , </symbol>
+            <identifier> Array </identifier>
+            <identifier> sa </identifier>
+        </parameterList>
+        <symbol> ) </symbol>
+        <subroutineBody>
+            <symbol> { </symbol>
+            <statements>
+                <letStatement>
+                    <keyword> let </keyword>
+                    <identifier> some_number </identifier>
+                    <symbol> = </symbol>
+                    <expression>
+                        <term>
+                            <identifier> sn </identifier>
+                        </term>
+                    </expression>
+                    <symbol> ; </symbol>
+                </letStatement>
+                <letStatement>
+                    <keyword> let </keyword>
+                    <identifier> some_char </identifier>
+                    <symbol> = </symbol>
+                    <expression>
+                        <term>
+                            <identifier> sc </identifier>
+                        </term>
+                    </expression>
+                    <symbol> ; </symbol>
+                </letStatement>
+                <letStatement>
+                    <keyword> let </keyword>
+                    <identifier> some_bool </identifier>
+                    <symbol> = </symbol>
+                    <expression>
+                        <term>
+                            <identifier> sb </identifier>
+                        </term>
+                    </expression>
+                    <symbol> ; </symbol>
+                </letStatement>
+                <letStatement>
+                    <keyword> let </keyword>
+                    <identifier> some_array </identifier>
+                    <symbol> = </symbol>
+                    <expression>
+                        <term>
+                            <identifier> Array </identifier>
+                            <symbol> . </symbol>
+                            <identifier> new </identifier>
+                            <symbol> ( </symbol>
+                            <expressionList>
+                                <expression>
+                                    <term>
+                                        <integerConstant> 10 </integerConstant>
+                                    </term>
+                                </expression>
+                            </expressionList>
+                            <symbol> ) </symbol>
+                        </term>
+                    </expression>
+                    <symbol> ; </symbol>
+                </letStatement>
+            </statements>
+            <symbol> } </symbol>
+        </subroutineBody>
+    </subroutineDec>
+    <subroutineDec>
+        <keyword> function </keyword>
+        <keyword> void </keyword>
+        <identifier> foo </identifier>
+        <symbol> ( </symbol>
+        <parameterList></parameterList>
+        <symbol> ) </symbol>
+        <subroutineBody>
+            <symbol> { </symbol>
+            <statements>
+                <doStatement>
+                    <keyword> do </keyword>
+                    <identifier> baz </identifier>
+                    <symbol> ( </symbol>
+                    <expressionList>
+                        <expression>
+                            <term>
+                                <integerConstant> 0 </integerConstant>
+                            </term>
+                        </expression>
+                        <symbol> , </symbol>
+                        <expression>
+                            <term>
+                                <integerConstant> 10 </integerConstant>
+                            </term>
+                        </expression>
+                    </expressionList>
+                    <symbol> ) </symbol>
+                    <symbol> ; </symbol>
+                </doStatement>
+                <returnStatement>
+                    <keyword> return </keyword>
+                    <symbol> ; </symbol>
+                </returnStatement>
+            </statements>
+            <symbol> } </symbol>
+        </subroutineBody>
+    </subroutineDec>
+    <subroutineDec>
+        <keyword> method </keyword>
+        <keyword> int </keyword>
+        <identifier> baz </identifier>
+        <symbol> ( </symbol>
+        <parameterList>
+            <keyword> int </keyword>
+            <identifier> x </identifier>
+            <symbol> , </symbol>
+            <keyword> int </keyword>
+            <identifier> y </identifier>
+        </parameterList>
+        <symbol> ) </symbol>
+        <subroutineBody>
+            <symbol> { </symbol>
+            <varDec>
+                <keyword> var </keyword>
+                <keyword> int </keyword>
+                <identifier> a </identifier>
+                <symbol> , </symbol>
+                <identifier> b </identifier>
+                <symbol> , </symbol>
+                <identifier> c </identifier>
+                <symbol> ; </symbol>
+            </varDec>
+            <statements>
+                <whileStatement>
+                    <keyword> while </keyword>
+                    <symbol> ( </symbol>
+                    <expression>
+                        <term>
+                            <identifier> x </identifier>
+                        </term>
+                        <symbol> &lt; </symbol>
+                        <term>
+                            <identifier> y </identifier>
+                        </term>
+                    </expression>
+                    <symbol> ) </symbol>
+                    <symbol> { </symbol>
+                    <statements>
+                        <ifStatement>
+                            <keyword> if </keyword>
+                            <symbol> ( </symbol>
+                            <expression>
+                                <term>
+                                    <identifier> x </identifier>
+                                </term>
+                                <symbol> &gt; </symbol>
+                                <term>
+                                    <integerConstant> 0 </integerConstant>
+                                </term>
+                                <symbol> | </symbol>
+                                <term>
+                                    <identifier> x </identifier>
+                                </term>
+                                <symbol> &lt; </symbol>
+                                <term>
+                                    <integerConstant> 0 </integerConstant>
+                                </term>
+                            </expression>
+                            <symbol> ) </symbol>
+                            <symbol> { </symbol>
+                            <statements></statements>
+                            <identifier> some_array </identifier>
+                        </ifStatement>
+                    </statements>
+                    <symbol> [ </symbol>
+                </whileStatement>
+            </statements>
+            <integerConstant> 0 </integerConstant>
+        </subroutineBody>
+    </subroutineDec>
+    <symbol> ] </symbol>
 </class>

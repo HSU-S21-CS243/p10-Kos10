@@ -303,6 +303,8 @@ void XmlCompilationEngine::compileIf()
 	output << "</statements>" << endl;
 
 	output << _tokens[_tokenCounter]->toString() << endl; //for the '}'
+	_tokenCounter++; //this has to be done after every write from the tokens
+
 	if (_tokens[_tokenCounter]->keyword == Keyword::Else)
 	{
 		output << _tokens[_tokenCounter]->toString() << endl; //for the 'if'
