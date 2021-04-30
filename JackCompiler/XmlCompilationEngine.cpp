@@ -95,18 +95,22 @@ void XmlCompilationEngine::compileSubroutineCall()
 {
 	//I don't think this will work. I'm at a loss. I've missed some critical piece of information and I don't
 	//know how to ask for help in a way that will actually aid me.
-	while (_tokens[_tokenCounter]->symbol != Symbol::SemiColon) //go until the end of the statment
+	
+	output << _tokens[_tokenCounter]->toString() << endl;
+	_tokenCounter++; //this has to be done after every write from the tokens
+
+	if (_tokens[_tokenCounter]->symbol == Symbol::Period)
 	{
-		if (_tokens[_tokenCounter]->symbol != Symbol::LeftParentheses)
-		{
-			compileExpressionList();
-		}
-		else
-		{
-			output << _tokens[_tokenCounter]->toString() << endl;
-			_tokenCounter++; //this has to be done after every write from the tokens
-		}
+		output << _tokens[_tokenCounter]->toString() << endl;
+		_tokenCounter++; //this has to be done after every write from the tokens
+
+		output << _tokens[_tokenCounter]->toString() << endl;
+		_tokenCounter++; //this has to be done after every write from the tokens
+
 	}
+
+	compileExpressionList();
+
 	//output << _tokens[_tokenCounter]->toString() << endl; //for the ';'
 	//_tokenCounter++; //this has to be done after every write from the tokens
 }
