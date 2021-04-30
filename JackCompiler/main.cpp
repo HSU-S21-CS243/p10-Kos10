@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 	files_to_process.push_back("tests/ch10/ArrayTest/Main.jack");
 	//files_to_process.push_back("tests/ch10/ExpressionLessSquare/Square.jack");
 	//files_to_process.push_back("tests/ch10/ExpressionLessSquare/SquareGame.jack");
-	ofstream output_file{ "Seven.xml" };
+	ofstream output_file{ "Main.xml" };
 
 #else
 	ofstream output_file{};
