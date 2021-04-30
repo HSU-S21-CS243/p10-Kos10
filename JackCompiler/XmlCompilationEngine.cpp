@@ -263,6 +263,7 @@ void XmlCompilationEngine::compileWhile()
 void XmlCompilationEngine::compileReturn()
 {
 	output << "<returnStatement>" << endl;
+
 	output << _tokens[_tokenCounter]->toString() << endl; //for the keyword 'return'
 	_tokenCounter++; //this has to be done after every write from the tokens
 
@@ -307,7 +308,7 @@ void XmlCompilationEngine::compileIf()
 
 	if (_tokens[_tokenCounter]->keyword == Keyword::Else)
 	{
-		output << _tokens[_tokenCounter]->toString() << endl; //for the 'if'
+		output << _tokens[_tokenCounter]->toString() << endl; //for the 'else'
 		_tokenCounter++; //this has to be done after every write from the tokens
 
 		output << _tokens[_tokenCounter]->toString() << endl; //for the '{'
@@ -315,7 +316,10 @@ void XmlCompilationEngine::compileIf()
 
 		output << "<statements>" << endl;
 
-		compileStatement(); //for the else
+		while (_tokens[_tokenCounter]->isStatement())
+		{
+			compileStatement(); //important while
+		}
 
 		output << "</statements>" << endl;
 
