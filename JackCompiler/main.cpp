@@ -55,9 +55,9 @@ int main(int argc, char* argv[])
 	vector<string> files_to_process{};
 #ifdef _DEBUG
 	//makes debugging easier by allowing you to directly load in files w/o using command line
-	files_to_process.push_back("tests/ch10/ExpressionLessSquare/Main.jack");
-	files_to_process.push_back("tests/ch10/ExpressionLessSquare/Square.jack");
-	files_to_process.push_back("tests/ch10/ExpressionLessSquare/SquareGame.jack");
+	files_to_process.push_back("tests/ch10/Square/Main.jack");
+	files_to_process.push_back("tests/ch10/Square/Square.jack");
+	files_to_process.push_back("tests/ch10/Square/SquareGame.jack");
 	ofstream output_file{ "Main.xml" };
 
 #else
