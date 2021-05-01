@@ -78,7 +78,7 @@ void XmlCompilationEngine::compileSubroutine()
 	
 	//statments 
 	output << "<statements>" << endl;
-	while(_tokens[_tokenCounter]->isStatement())
+	while(_tokens[_tokenCounter]->isStatement() || _tokens[_tokenCounter]->keyword == Keyword::Return)
 	{
 		compileStatement();
 	}
@@ -326,7 +326,7 @@ void XmlCompilationEngine::compileIf()
 		output << _tokens[_tokenCounter]->toString() << endl; //for the '}'
 		_tokenCounter++; //this has to be done after every write from the tokens
 	}
-	_tokenCounter++; //this has to be done after every write from the tokens
+	//_tokenCounter++; //this has to be done after every write from the tokens
 
 	output << "</ifStatement>" << endl;
 }
